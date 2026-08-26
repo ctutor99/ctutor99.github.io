@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Chris Tutor - Projects</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <div class="site-header">
+    <img src="images/profile/avatar.png" alt="Chris Tutor" class="avatar">
+    <h1>Chris Tutor</h1>
+  </div>
+
+  <p>
+    <a href="index.html">About</a> |
+    <a href="experience.html">Experience</a> |
+    <a href="projects.html">Projects</a> |
+    <a href="baking.html">Baking</a>
+  </p>
+
+  <hr>
+
+  <h2>Projects</h2>
+
+  <h3>评论罗伯特 (Sina Weibo Engagement Bot)</h3>
+  <p><strong>Tags:</strong> Python, LangGraph, AutoGen, FastAPI, Gradio</p>
+  <img src="images/boogu/boogu-robot.jpg" alt="Weibo's robot mascot" class="float-right" width="200">
+  <p>
+    <strong>What it is.</strong> Weibo's Comment Robot is the project I worked on
+    during my internship at Sina Weibo, which replies to real posts the way any
+    other commenter would on their social media app, editing their posted image
+    if they posted one and if the bot deemed it necessary. My piece of it was
+    making the pipeline that decides what to make and whether it's any good,
+    running across hundreds of thousands of posts. Many barriers had to be
+    placed; a post can be sensitive, or it can be a screenshot with all its
+    meaning in the text, or it can simply not warrant a reply at all.
+  </p>
+  <p>
+    <strong>How I built it.</strong> The whole pipeline is Python. Qwen
+    3.5-122B, a vision-language model, reads each post first and makes the
+    routing call: sensitive, text-only screenshot, or no reply warranted.
+    Posts that clear that gate pass to Boogu-Image-Turbo, a diffusion model,
+    which generates the edited image reply. Nothing publishes until a
+    VLM-as-judge verification loop I implemented confirms the comment and the
+    generated image as good additions. I restructured the pipeline as a
+    five-agent state machine in LangGraph allowing for retries on the posts
+    where the VLM-as-judge fails. If the post fails 3 times or more, AutoGen
+    handles the human-in-the-loop layer for catching and overriding failed
+    outputs. FastAPI serves the endpoints, with Gradio for the interactive
+    demo, and I built a dashboard on top of that visualizing agent reasoning,
+    retries, and verifier feedback per batch. Version control and code review
+    ran through Git alongside the other interns on the team.
+  </p>
+
+  <h4 class="section-break"><strong>Demo: 9 Best Results</strong></h4>
+  <p>
+    Real before/after examples pulled straight from the pipeline: the original Weibo
+    post and photo on the left, the AI-generated comment and edited photo on the right.
+  </p>
+
+  <div class="example-card">
+    <h5>Example 1</h5>
+    <p><strong>Original post:</strong> 狸花猫发现被偷拍后<br>猫：我叫丧飙🦁</p>
+    <p><strong>AI comment:</strong> 哈哈哈哈这眼神真的绝了，感觉下一秒就要问路过了多少车！</p>
+    <div class="image-row">
+      <img src="images/boogu/boogu-01-before.jpg" alt="Original photo of a cat" width="300">
+      <img src="images/boogu/boogu-01-after.png" alt="Edited photo of a cat" width="300">
+    </div>
+  </div>
+
+  <div class="example-card">
+    <h5>Example 2</h5>
+    <p><strong>Original post:</strong> 38456【丑猫】其实也不是很丑吧喵</p>
+    <p><strong>AI comment:</strong> 哪里有丑！这只小煤球明明是暗黑系高冷男神，眼神超有戏的！</p>
+    <div class="image-row">
+      <img src="images/boogu/boogu-02-before.jpg" alt="Original photo of a cat" width="300">
+      <img src="images/boogu/boogu-02-after.png" alt="Edited photo of a cat" width="300">
+    </div>
+  </div>
+
+  <div class="example-card">
+    <h5>Example 3</h5>
+    <p><strong>Original post:</strong> 小红书应该改名叫“小红输”：<br>“照骗随处可见，认真你就输了”！[允悲]</p>
+    <p><strong>AI comment:</strong> 看这精致的造型和光影，确实很有“照骗”的感觉，像极了电影里的布景，现实中真的有这么完美的景点吗？感觉去了可能会发现全是水泥灰哈哈！😂</p>
+    <div class="image-row">
+      <img src="images/boogu/boogu-03-before.jpg" alt="Original travel photo" width="300">
+      <img src="images/boogu/boogu-03-after.png" alt="Edited travel photo" width="300">
+    </div>
+  </div>
+
+  <div class="example-card">
+    <h5>Example 4</h5>
+    <p><strong>Original post:</strong> 不？不是？这。。大小子真有劲啊</p>
+    <p><strong>AI comment:</strong> 哈哈，这体力真的绝了！看这动作力度和表情管理，果然是舞台王者，难怪博主说他有劲~</p>
+    <div class="image-row">
+      <img src="images/boogu/boogu-04-before.jpg" alt="Original photo" width="300">
+      <img src="images/boogu/boogu-04-after.png" alt="Edited photo" width="300">
+    </div>
+  </div>
+
+  <div class="example-card">
+    <h5>Example 5</h5>
+    <p><strong>Original post:</strong> 新家快递之我的漂亮餐具🍽️<br>总是会在不同的季节爱上不同风格的餐具💐</p>
+    <p><strong>AI comment:</strong> 这个粉绿渐变色也太温柔了吧，看着就很有食欲！</p>
+    <div class="image-row">
+      <img src="images/boogu/boogu-05-before.jpg" alt="Original photo of dinnerware" width="300">
+      <img src="images/boogu/boogu-05-after.png" alt="Edited photo of dinnerware" width="300">
+    </div>
+  </div>
+
+  <div class="example-card">
+    <h5>Example 6</h5>
+    <p><strong>Original post:</strong> 第一次下107 公斤 （1米87，肌肉量比较多）</p>
+    <p><strong>AI comment:</strong> 恭喜突破新关卡！一米八七的身高加上肌肉量，这个体重控制得非常棒，看来平时的训练效果很明显，继续加油！</p>
+    <div class="image-row">
+      <img src="images/boogu/boogu-06-before.jpg" alt="Original photo" width="300">
+      <img src="images/boogu/boogu-06-after.png" alt="Edited photo" width="300">
+    </div>
+  </div>
+
+  <div class="example-card">
+    <h5>Example 7</h5>
+    <p><strong>Original post:</strong> 我家狗好就好在既能习惯城里的生活，也很享受乡下日子，它的好性格决定了他在哪儿都能吃得开。</p>
+    <p><strong>AI comment:</strong> 这笑容简直太治愈了！确实是哪里都能把日子过成诗的小机灵鬼，看着就让人心情变好。</p>
+    <div class="image-row">
+      <img src="images/boogu/boogu-07-before.jpg" alt="Original photo of a dog" width="300">
+      <img src="images/boogu/boogu-07-after.png" alt="Edited photo of a dog" width="300">
+    </div>
+  </div>
+
+  <div class="example-card">
+    <h5>Example 8</h5>
+    <p><strong>Original post:</strong> 我想知道我是怎么睡的觉 每天早上起来头发能变成这样[傻眼][傻眼]</p>
+    <p><strong>AI comment:</strong> 这发量真让人羡慕，就是看起来稍微有点费梳子，急需一把巨型梳子来救援这头“秀发”！[捂脸]</p>
+    <div class="image-row">
+      <img src="images/boogu/boogu-08-before.jpg" alt="Original photo of messy hair" width="300">
+      <img src="images/boogu/boogu-08-after.png" alt="Edited photo of messy hair" width="300">
+    </div>
+  </div>
+
+  <div class="example-card">
+    <h5>Example 9</h5>
+    <p><strong>Original post:</strong> #f1# 在Canal+的纪录片《天生赢家》中，加斯利分享了一则乔斯·维斯塔潘在一场卡丁车赛后严厉训斥Max的故事。</p>
+    <p><strong>AI comment:</strong> 严苛的家庭教育虽伴随巨大压力，却也是塑造强者性格的熔炉，将每一次挫折都锤炼成了登顶的动力。</p>
+    <div class="image-row">
+      <img src="images/boogu/boogu-09-before.jpg" alt="Original photo" width="300">
+      <img src="images/boogu/boogu-09-after.png" alt="Edited photo" width="300">
+    </div>
+  </div>
+
+  <hr>
+
+  <p>
+    <a href="experience.html">← Previous: Experience</a> &nbsp;|&nbsp;
+    Next: <a href="baking.html">Baking →</a>
+  </p>
+
+  <p>
+    &copy; 2026 Chris Tutor &nbsp;|&nbsp; <a href="mailto:ctutor@usc.edu">ctutor@usc.edu</a>
+  </p>
+
+</body>
+</html>

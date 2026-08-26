@@ -1,0 +1,5 @@
+# Raw/unprocessed source photos - not referenced by any page, no need to ship these
+images/Personal\ website\ images/
+
+# macOS
+.DS_Store

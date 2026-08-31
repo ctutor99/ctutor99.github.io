@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Chris Tutor - Study BuddAI</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <div class="site-header">
+    <img src="images/profile/avatar.png" alt="Chris Tutor" class="avatar">
+    <h1>Chris Tutor</h1>
+  </div>
+
+  <p>
+    <a href="index.html">About</a> |
+    <a href="experience.html">Experience</a> |
+    <a href="projects.html">Projects</a> |
+    <a href="baking.html">Baking</a>
+  </p>
+
+  <hr>
+
+  <h2>Projects</h2>
+
+  <div class="project-switcher">
+    <strong>Go to a project:</strong>
+    <a href="projects.html" class="project-button">Weibo Engagement Bot</a>
+    <a href="study-buddai.html" class="project-button">Study BuddAI</a>
+  </div>
+
+  <hr>
+
+  <h3>Study BuddAI</h3>
+  <p><strong>Tags:</strong> Python, FastAPI, React, Vite, faster-whisper, Ollama, Server-Sent Events</p>
+  <p>
+    <strong>What it is.</strong> Study BuddAI is a lecture transcription and study
+    assistant web app I built on my own. It records microphone audio in short
+    chunks, transcribes each chunk live as you speak, generates comprehension
+    questions from the transcript as it grows, and produces a full summary of the
+    whole lecture when you press End. Recently, I have been able to bring my PC to college.
+    This means that I have the resources to run a local large language model,
+    so I can now generate questions and summaries without sending any data to the cloud, or 
+    incurring any API costs. 
+  </p>
+  <p>
+    <strong>How I built it.</strong> The frontend is React and Vite. It uses the
+    browser's MediaRecorder API to capture roughly five-second audio chunks
+    back-to-back and upload them to the backend in order, so the audio has no
+    gaps. The backend is Python with FastAPI. Each chunk is transcribed by a
+    local faster-whisper model (large-v3-turbo), and a local large language model
+    (Qwen3 served by Ollama) writes one or two questions about each new passage
+    of transcript and the final end-of-lecture summary. The growing transcript,
+    the questions, and the summary are streamed to the browser over Server-Sent
+    Events, and the server sends a full snapshot of the current state on every
+    reconnect so a dropped connection resyncs cleanly.
+  </p>
+  <p>
+    <strong>Code:</strong>
+    <a href="https://github.com/ctutor99/Study-BuddAI">github.com/ctutor99/Study-BuddAI</a>
+  </p>
+
+  <hr>
+
+  <h4 class="section-break"><strong>Demo</strong></h4>
+  <p>
+    A short run of the app: I recorded myself talking about this portfolio, and
+    Study BuddAI transcribed it live, generated questions as I spoke, and
+    summarized the whole thing when I pressed End.
+  </p>
+
+  <div class="shots">
+    <figure>
+      <img src="images/study-buddai/controls.png" alt="Start Lecture, End, and Cancel buttons above a status bar">
+      <figcaption>Controls and status</figcaption>
+    </figure>
+    <figure>
+      <img src="images/study-buddai/transcript.png" alt="Live transcript of the recorded audio">
+      <figcaption>Live transcript</figcaption>
+    </figure>
+    <figure>
+      <img src="images/study-buddai/questions.png" alt="Two comprehension questions generated from the transcript">
+      <figcaption>Generated questions</figcaption>
+    </figure>
+    <figure>
+      <img src="images/study-buddai/summary.png" alt="Paragraph summary and bullet points generated when the lecture ends">
+      <figcaption>Summary</figcaption>
+    </figure>
+  </div>
+
+  <hr>
+
+  <p>
+    <a href="projects.html">← Back to Projects</a>
+  </p>
+
+  <p>
+    &copy; 2026 Chris Tutor &nbsp;|&nbsp; <a href="mailto:ctutor@usc.edu">ctutor@usc.edu</a>
+  </p>
+
+</body>
+</html>

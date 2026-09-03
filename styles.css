@@ -116,25 +116,6 @@ hr {
   margin: 0 0 10px 20px;
 }
 
-.project-switcher {
-  margin: 20px 0;
-}
-
-.project-button {
-  display: inline-block;
-  border: 1px solid #990000;
-  border-radius: 6px;
-  padding: 6px 12px;
-  margin: 5px 8px 0 0;
-  text-decoration: none;
-  color: #990000;
-}
-
-.project-button:hover {
-  background-color: #990000;
-  color: white;
-}
-
 .shots {
   display: flex;
   flex-wrap: wrap;
